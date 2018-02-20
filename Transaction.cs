@@ -24,7 +24,7 @@ namespace HesapKitap
         {
             get
             {
-                return string.Format("{0}|{1}|{2}|{3}|{4}|{5}", Date, Description, Detail, Category, Bonus, Amount);
+                return string.Format("{0:yyyy-MM-dd}|{1}|{2}|{3}|{4}|{5}", Date, Description, Detail, Category, Bonus, Amount);
             }
         }
 
