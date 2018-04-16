@@ -35,9 +35,20 @@ namespace HesapKitap
             var newTransactions = _Transactions.Where(t => t.Marker == NewTransactionMarker).OrderBy(t => t.Group).ThenBy(t => t.Date);
             var oldTransactions = _Transactions.Where(t => !newTransactions.Contains(t));
 
-            if (newTransactions.Count() > 0)
+            var pendingTransactions = newTransactions.Where(t => t.Pending).OrderBy(t => t.SortOrder);
+            var finalizedTransactions = newTransactions.Where(t => !t.Pending).OrderBy(t => t.SortOrder);
+
+            if (finalizedTransactions.Any())
             {
-                foreach (var oneTransaction in newTransactions.OrderBy(t => t.SortOrder))
+                foreach (var oneTransaction in finalizedTransactions)
+                    _Output.AppendLine(oneTransaction.ExcelOutput);
+
+                _Output.AppendLine();
+            }
+
+            if (pendingTransactions.Any())
+            {
+                foreach (var oneTransaction in pendingTransactions)
                     _Output.AppendLine(oneTransaction.ExcelOutput);
 
                 _Output.AppendLine();

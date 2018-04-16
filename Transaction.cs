@@ -38,6 +38,8 @@ namespace HesapKitap
 
         public int SortOrder { get; private set; }
 
+        public bool Pending { get; private set; }
+
         internal static Transaction Parse(string oneLine)
         {
             string[] parts = oneLine.Split(new char[] { '\t' });
@@ -75,7 +77,8 @@ namespace HesapKitap
                 Category = category,
                 Description = description,
                 Group = TransactionGroup.Diğer,
-                SortOrder = GetSortOrder(legend)
+                SortOrder = GetSortOrder(legend),
+                Pending = legend == "orange"
             };
         }
 
