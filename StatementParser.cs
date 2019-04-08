@@ -28,6 +28,7 @@ namespace HesapKitap
                     _Transactions.Add(oneTransaction);
             }
 
+            _Transactions.Where(t => t.Description.Contains("Son ekstre borcu")).ToList().ForEach(t => t.Group = TransactionGroup.Ödeme);
             _Transactions.Where(t => t.Amount > 0).ToList().ForEach(t => t.Group = TransactionGroup.Ödeme);
             _Transactions.Where(t => Regex.IsMatch(t.Description, @"\(\d+\/\d+\)")).ToList().ForEach(t => t.Group = TransactionGroup.Taksit);
             _Transactions.Where(t => !knownTransactions.Contains(t.LogOutput)).ToList().ForEach(t => t.Marker = NewTransactionMarker);

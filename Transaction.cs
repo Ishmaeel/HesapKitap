@@ -53,6 +53,7 @@ namespace HesapKitap
             double bonus;
             double amount;
             string legend;
+            string installment;
 
             if (!DateTime.TryParse(parts[0], out date))
                 return null;
@@ -63,11 +64,14 @@ namespace HesapKitap
             StringHelper.TryParse(parts[2], out category);
 
             double.TryParse(parts[3], out bonus);
+            installment = parts[3];
 
             if (!double.TryParse(parts[4], out amount))
                 return null;
 
             StringHelper.TryParse(parts[5], out legend);
+
+            description = FixDescription(description, installment);
 
             return new Transaction
             {
@@ -80,6 +84,18 @@ namespace HesapKitap
                 SortOrder = GetSortOrder(legend),
                 Pending = legend == "orange"
             };
+        }
+
+        private static string FixDescription(string description, string installment)
+        {
+            description = description.Replace("TRTR", "");
+            description = description.Replace("İSTANBUL", "");
+            description = description.Trim();
+
+            if (installment.Length >= 3 && installment.Contains("/"))
+                description += " " + installment;
+
+            return description;
         }
 
         private static int GetSortOrder(string legend)

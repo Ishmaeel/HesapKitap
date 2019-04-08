@@ -11,7 +11,7 @@
         MinWidth="300"
         MinHeight="500"
         WindowStartupLocation="CenterScreen"
-        Icon="Wallet.ico">
+        Icon="Wallet.ico" KeyDown="Window_KeyDown">
     <Grid>
         <Button x:Name="buttonSave"
                 Content="Save"

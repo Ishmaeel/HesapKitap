@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace HesapKitap
 {
@@ -17,6 +18,11 @@ namespace HesapKitap
         }
 
         private void buttonSave_Click(object sender, RoutedEventArgs e)
+        {
+            Save();
+        }
+
+        private void Save()
         {
             if (_LastParser == null)
                 return;
@@ -53,6 +59,12 @@ namespace HesapKitap
             {
                 ignoreChange = false;
             }
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (buttonSave.IsEnabled && e.Key == Key.S && (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control)
+                Save();
         }
     }
 }
